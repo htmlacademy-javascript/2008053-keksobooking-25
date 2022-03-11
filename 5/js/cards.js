@@ -2,6 +2,8 @@ import { makeOffersList } from './data.js';
 const mockData = makeOffersList();
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const cardsListFragment = document.createDocumentFragment();
+const photosFragment = document.createDocumentFragment();
+const featuresFragment = document.createDocumentFragment();
 
 const typeTranslation = {
   palace: 'Дворец',
@@ -11,8 +13,23 @@ const typeTranslation = {
   hotel: 'Отель'
 };
 
-mockData.forEach((element) => {
+
+function getPhotos(photo) {
+  const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+  template.src = photo;
+  photosFragment.appendChild(template);
+}
+
+function getFeatures(feature) {
+  const featureItem = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
+  featuresFragment.appendChild(featureItem);
+}
+
+function makeCard(element) {
+  const featureArray = element.offer.features;
+  const photosArray = element.offer.photos;
   const card = cardTemplate.cloneNode(true);
+  const offerPhotos = card.querySelector('.popup__photos');
   const userAvatar = card.querySelector('.popup__avatar');
   const titleText = card.querySelector('.popup__title');
   const addressText = card.querySelector('.popup__text--address');
@@ -20,11 +37,8 @@ mockData.forEach((element) => {
   const typeText = card.querySelector('.popup__type');
   const capactityText = card.querySelector('.popup__text--capacity');
   const timeText = card.querySelector('.popup__text--time');
-  const featuresText = card.querySelector('.popup__features');
   const descriptionText = card.querySelector('.popup__description');
-  const offerPhotos = card.querySelector('.popup__photos');
-  const offerPhoto = card.querySelector('.popup__photo');
-  const photosArray = element.offer.photos;
+  const featureContainer= card.querySelector('.popup__features');
 
   userAvatar.src = element.author.avatar;
   titleText.textContent = element.offer.title;
@@ -33,15 +47,16 @@ mockData.forEach((element) => {
   typeText.textContent = typeTranslation[element.offer.type];
   capactityText.textContent = `${element.offer.rooms  } комнаты для ${ element.offer.guests  } гостей`;
   timeText.textContent = `Заезд после ${  element.offer.checkin  }, выезд до ${  element.offer.checkout}`;
-  featuresText.textContent = element.offer.features;
   descriptionText.textContent = element.offer.description;
-  offerPhotos.textContent = '';
-  photosArray.forEach((photo) => {
-    const template = offerPhoto.cloneNode(false);
-    template.src = photo;
-    offerPhotos.appendChild(template);
-  });
+  offerPhotos.innerHTML = '';
+  photosArray.forEach(getPhotos);
+  offerPhotos.append(photosFragment);
+  featureArray.forEach(getFeatures);
+  featureContainer.innerHTML = '';
+  featureContainer.append(featuresFragment);
   cardsListFragment.appendChild(card);
 }
-);
+
+mockData.forEach(makeCard);
+
 export {cardsListFragment};
