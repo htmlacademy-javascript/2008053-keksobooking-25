@@ -35,11 +35,6 @@ function getFeatures() {
   return FEATURES.filter((feature) => feature.length > getRandomInteger(3, 11));
 }
 
-function getPhotos() {
-  PHOTOS.length = getRandomInteger(1, 3);
-  return PHOTOS;
-}
-
 function getOfferData() {
   return {
     title: 'Жилье в аренду',
@@ -47,11 +42,12 @@ function getOfferData() {
     price: getRandomInteger(1, 1000000),
     type: PLACE_TYPES[getRandomInteger(0, 4)],
     rooms: getRandomInteger(1, 100),
+    guests: getRandomInteger(1, 100),
     checkin: CHECK_TIMES[getRandomInteger(0, 2)],
     checkout: CHECK_TIMES[getRandomInteger(0, 2)],
     features: getFeatures(),
     description: `Уютное жилье в ${  PLACES[getRandomInteger(0, 2)]}`,
-    photos: getPhotos()
+    photos: PHOTOS.slice(getRandomInteger(0, 2))
   };
 }
 
@@ -70,6 +66,6 @@ function makeOffer() {
   };
 }
 
-const makeOffersList = () => Array(10).fill(makeOffer());
+const makeOffersList = () => Array.from({length: 10}, makeOffer);
 
 export {makeOffersList};
