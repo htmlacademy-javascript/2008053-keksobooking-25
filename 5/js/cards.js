@@ -5,7 +5,7 @@ const cardsListFragment = document.createDocumentFragment();
 const photosFragment = document.createDocumentFragment();
 const featuresFragment = document.createDocumentFragment();
 
-const typeTranslation = {
+const TYPES = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
@@ -16,20 +16,22 @@ const typeTranslation = {
 
 function getPhotos(photo) {
   const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+  this.innerHTML = '';
   template.src = photo;
   photosFragment.appendChild(template);
 }
 
 function getFeatures(feature) {
   const featureItem = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
+  this.innerHTML = '';
   featuresFragment.appendChild(featureItem);
 }
 
 function makeCard(element) {
-  const featureArray = element.offer.features;
-  const photosArray = element.offer.photos;
+  const features = element.offer.features;
+  const photos = element.offer.photos;
   const card = cardTemplate.cloneNode(true);
-  const offerPhotos = card.querySelector('.popup__photos');
+  const photoContainer = card.querySelector('.popup__photos');
   const userAvatar = card.querySelector('.popup__avatar');
   const titleText = card.querySelector('.popup__title');
   const addressText = card.querySelector('.popup__text--address');
@@ -38,21 +40,19 @@ function makeCard(element) {
   const capactityText = card.querySelector('.popup__text--capacity');
   const timeText = card.querySelector('.popup__text--time');
   const descriptionText = card.querySelector('.popup__description');
-  const featureContainer= card.querySelector('.popup__features');
+  const featureContainer = card.querySelector('.popup__features');
 
   userAvatar.src = element.author.avatar;
   titleText.textContent = element.offer.title;
   addressText.textContent = element.offer.address;
   priceText.textContent = `${element.offer.price  } ₽/ночь`;
-  typeText.textContent = typeTranslation[element.offer.type];
+  typeText.textContent = TYPES[element.offer.type];
   capactityText.textContent = `${element.offer.rooms  } комнаты для ${ element.offer.guests  } гостей`;
   timeText.textContent = `Заезд после ${  element.offer.checkin  }, выезд до ${  element.offer.checkout}`;
   descriptionText.textContent = element.offer.description;
-  offerPhotos.innerHTML = '';
-  photosArray.forEach(getPhotos);
-  offerPhotos.append(photosFragment);
-  featureArray.forEach(getFeatures);
-  featureContainer.innerHTML = '';
+  photos.forEach(getPhotos, photoContainer);
+  features.forEach(getFeatures, featureContainer);
+  photoContainer.append(photosFragment);
   featureContainer.append(featuresFragment);
   cardsListFragment.appendChild(card);
 }
