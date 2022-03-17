@@ -1,5 +1,3 @@
-let winX, winY;
-
 //Функция взята со StackOverflow: https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range и доработана
 const getRandomInteger = (a, b) => {
   const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -24,15 +22,5 @@ const enableElement = (element) => {
   element.toggleAttribute('disabled', false);
 };
 
-const disableWindowScroll = () => {
-  winX = window.scrollX;
-  winY = window.scrollY;
-};
-
-const enableWindowScroll = () => {
-  winX = -1;
-  winY = -1;
-};
-
-export {winX, winY, getRandomFloat, getRandomInteger, disableElement, enableElement, disableWindowScroll, enableWindowScroll};
+export {getRandomFloat, getRandomInteger, disableElement, enableElement};
 
