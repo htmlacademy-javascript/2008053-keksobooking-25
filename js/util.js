@@ -10,7 +10,7 @@ const getRandomFloat = (a, b, decimal = 1) => {
   const min = Math.min(Math.abs(a), Math.abs(b));
   const max = Math.max(Math.abs(a), Math.abs(b));
 
-  return +(Math.random() * (max - min) + min).toFixed(decimal);
+  return Number(Math.random() * (max - min) + min).toFixed(decimal);
 };
 
 const disableElement = (element) => {
