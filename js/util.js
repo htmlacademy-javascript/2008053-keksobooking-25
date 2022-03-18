@@ -1,3 +1,4 @@
+//Функция взята со StackOverflow: https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
 const getRandomInteger = (a, b) => {
   const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const max = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -22,4 +23,3 @@ const enableElement = (element) => {
 };
 
 export {getRandomFloat, getRandomInteger, disableElement, enableElement};
-
