@@ -16,7 +16,7 @@ const minPrices = {
 };
 
 pristine.addValidator(capacity, () => {
-  if (roomNumber.value > capacity.value && roomNumber.value < MAX_ROOMS && capacity.value !== '0' || roomNumber.value >= MAX_ROOMS && capacity.value === '0') {
+  if (roomNumber.value >= capacity.value && roomNumber.value < MAX_ROOMS && capacity.value !== '0' || roomNumber.value >= MAX_ROOMS && capacity.value === '0') {
     return true;
   }
   return false;
@@ -30,8 +30,9 @@ const validateForm = () => {
   });
 
   offerForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    pristine.validate();
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
   });
 };
 
