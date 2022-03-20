@@ -29,10 +29,8 @@ const validateForm = () => {
     priceForm.placeholder = minPrices[typeMenu.value];
   });
 
-  offerForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
+  offerForm.addEventListener('submit', () => {
+    pristine.validate();
   });
 };
 
