@@ -14,20 +14,20 @@ const TYPES = {
 };
 
 
-function getPhotos(photo) {
+const getPhotos = function (photo) {
   const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
   this.innerHTML = '';
   template.src = photo;
   photosFragment.appendChild(template);
-}
+};
 
-function getFeatures(feature) {
+const getFeatures = function (feature) {
   const featureItem = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
   this.innerHTML = '';
   featuresFragment.appendChild(featureItem);
-}
+};
 
-function makeCard(element) {
+const makeCard = (element) => {
   const features = element.offer.features;
   const photos = element.offer.photos;
   const card = cardTemplate.cloneNode(true);
@@ -55,7 +55,7 @@ function makeCard(element) {
   photoContainer.append(photosFragment);
   featureContainer.append(featuresFragment);
   cardsListFragment.appendChild(card);
-}
+};
 
 mockData.forEach(makeCard);
 
