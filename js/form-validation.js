@@ -20,7 +20,7 @@ const pristine = new Pristine(offerForm, {
   errorTextClass: 'ad-form__error'
 }, true);
 
-function getPriceErrorMessage () {
+function getPriceErrorMessage() {
   return `Для данного типа жилья минимальная стоимость ${  minPrices[typeMenu.value]}`;
 }
 
@@ -31,14 +31,14 @@ function getCapacityErrorMessage () {
   return `Не больше ${  roomNumber.value  } гостей`;
 }
 
-function validateCapacity () {
+function validateCapacity() {
   if (roomNumber.value >= capacity.value && Number(roomNumber.value) < MAX_ROOMS && Number(capacity.value) !== 0 || Number(roomNumber.value) === MAX_ROOMS && Number(capacity.value) === 0) {
     return true;
   }
   return false;
 }
 
-function validatePrice () {
+function validatePrice() {
   if (priceForm.value < minPrices[typeMenu.value]) {
     return false;
   }

@@ -7,4 +7,3 @@ document.querySelector('#map-canvas').appendChild(cardsListFragment.children[0])
 
 disablePage();
 enablePage();
-
