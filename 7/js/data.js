@@ -11,7 +11,7 @@ const PHOTOS = [
 const PLACES = ['Токио', 'Осаке', 'Окинаве'];
 
 
-function getAvatarNumber() {
+const getAvatarNumber = () => {
   const usedNumbers = [];
   const imgNumber = Number(getRandomInteger(1, 10));
   if (!usedNumbers.includes(imgNumber)) {
@@ -22,13 +22,11 @@ function getAvatarNumber() {
     return imgNumber;
   }
   getAvatarNumber();
-}
+};
 
-function getAvatar() {
-  return {
-    avatar: `img/avatars/user${  getAvatarNumber()  }.png`
-  };
-}
+const getAvatar = () => ({
+  avatar: `img/avatars/user${  getAvatarNumber()  }.png`
+});
 
 
 function getFeatures() {
