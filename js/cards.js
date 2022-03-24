@@ -55,8 +55,10 @@ const makeCard = (element) => {
   photoContainer.append(photosFragment);
   featureContainer.append(featuresFragment);
   cardsListFragment.appendChild(card);
+
+  return card;
 };
 
 mockData.forEach(makeCard);
 
-export {cardsListFragment};
+export {cardsListFragment, makeCard};
