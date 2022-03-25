@@ -26,12 +26,12 @@ const getCapacityErrorMessage = (value) => {
   const rooms = Number(value);
   if (rooms === MAX_ROOMS) {
     return 'Выберите "не для гостей"';
-  } else {
-    if (rooms === 1) {
-      return `Не больше ${  rooms  } гостя`;
-    }
-    return `Не больше ${  rooms  } гостей`;
   }
+  if (rooms === 1) {
+    return `Не больше ${  rooms  } гостя`;
+  }
+  return `Не больше ${  rooms  } гостей`;
+
 };
 
 const validateCapacity = () => {

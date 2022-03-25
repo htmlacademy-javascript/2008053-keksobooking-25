@@ -10,20 +10,21 @@ const sliderElement = offerForm.querySelector('.ad-form__slider');
 const disablePage = () => {
   offerForm.classList.add('ad-form--disabled');
   mapFilterForm.classList.add('map__filters--disabled');
-  sliderElement.setAttribute('disabled', true);
   formElements.forEach(disableElement);
   mapBasicFilters.forEach(disableElement);
   disableElement(mapFeatureFilter);
+  disableElement(sliderElement);
 };
 
 const enablePage = () => {
   offerForm.classList.remove('ad-form--disabled');
   mapFilterForm.classList.remove('map__filters--disabled');
-  sliderElement.removeAttribute('disabled');
   formElements.forEach(enableElement);
   mapBasicFilters.forEach(enableElement);
   enableElement(mapFeatureFilter);
+  enableElement(sliderElement);
 };
 
+disablePage();
 
-export { disablePage, enablePage };
+export { enablePage };

@@ -1,42 +1,53 @@
-import { disablePage, enablePage } from './form.js';
+import { enablePage } from './form.js';
 import { makeCard } from './cards.js';
 import { makeOffersList } from './data.js';
 
-disablePage();
-
+const addressForm = document.querySelector('#address');
 const points = makeOffersList();
+
+const DEFAULT_LAT = 35.68172;
+const DEFAULT_LNG = 139.75392;
+
+const MAIN_PIN_URL = './img/main-pin.svg';
+const MAIN_PIN_SIZE = [52, 52];
+const MAIN_PIN_ANCHOR = [26, 52];
+
+const PIN_URL = './img/pin.svg';
+const PIN_SIZE = [40, 40];
+const PIN_ANCHOR = [20, 40];
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
     enablePage();
-    document.querySelector('#address').value = '35.68172, 139.75392';
+    addressForm.value = `${DEFAULT_LAT  }, ${  DEFAULT_LNG}`;
   })
   .setView({
-    lat: 35.68172,
-    lng: 139.75392,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG
   }, 12);
 
 const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: MAIN_PIN_URL,
+  iconSize: MAIN_PIN_SIZE,
+  iconAnchor: MAIN_PIN_ANCHOR
 });
 
 const mainMarker = L.marker(
   {
-    lat: 35.68172,
-    lng: 139.75392,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG
   },
   {
     draggable: true,
-    icon: mainPinIcon,
+    icon: mainPinIcon
   },
 );
 
-const icon = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+const pinIcon = L.icon({
+  iconUrl: PIN_URL,
+  iconSize: PIN_SIZE,
+  iconAnchor: PIN_ANCHOR
 });
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -44,13 +55,11 @@ const markerGroup = L.layerGroup().addTo(map);
 const createMarker = (data) => {
   L.marker([data.location.lat, data.location.lng],
     {
-      icon,
+      pinIcon,
     })
     .addTo(markerGroup)
     .bindPopup(makeCard(data));
 };
-
-points.forEach(createMarker);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -62,5 +71,7 @@ L.tileLayer(
 mainMarker.addTo(map);
 
 mainMarker.on('moveend', (evt) => {
-  document.querySelector('#address').value = `${Number(evt.target.getLatLng().lat).toFixed(5)  }, ${  Number(evt.target.getLatLng().lng).toFixed(5)}`;
+  addressForm.value = `${Number(evt.target.getLatLng().lat).toFixed(5)  }, ${  Number(evt.target.getLatLng().lng).toFixed(5)}`;
 });
+
+points.forEach(createMarker);
