@@ -11,7 +11,6 @@ const placeTypes = {
   hotel: 'Отель'
 };
 
-
 const getPhotos = function (photo) {
   const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
   this.innerHTML = '';
