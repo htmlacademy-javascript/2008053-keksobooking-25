@@ -6,7 +6,9 @@ const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
 const timeIn = offerForm.querySelector('#timein');
 const timeOut = offerForm.querySelector('#timeout');
+
 const MAX_ROOMS = 100;
+
 const minPrices = {
   bungalow: 0,
   flat: 1000,
@@ -57,6 +59,9 @@ timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
 });
 
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
 
 offerForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
