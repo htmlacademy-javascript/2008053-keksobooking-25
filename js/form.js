@@ -5,6 +5,7 @@ const formElements = offerForm.querySelectorAll('.ad-form__element');
 const mapFilterForm = document.querySelector('.map__filters');
 const mapBasicFilters = mapFilterForm.querySelectorAll('.map__filter');
 const mapFeatureFilter = mapFilterForm.querySelector('.map__features');
+const sliderElement = offerForm.querySelector('.ad-form__slider');
 
 const disablePage = () => {
   offerForm.classList.add('ad-form--disabled');
@@ -12,6 +13,7 @@ const disablePage = () => {
   formElements.forEach(disableElement);
   mapBasicFilters.forEach(disableElement);
   disableElement(mapFeatureFilter);
+  disableElement(sliderElement);
 };
 
 const enablePage = () => {
@@ -20,7 +22,9 @@ const enablePage = () => {
   formElements.forEach(enableElement);
   mapBasicFilters.forEach(enableElement);
   enableElement(mapFeatureFilter);
+  enableElement(sliderElement);
 };
 
+disablePage();
 
-export { disablePage, enablePage };
+export { enablePage };

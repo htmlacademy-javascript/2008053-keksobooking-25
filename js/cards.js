@@ -1,11 +1,9 @@
-import { makeOffersList } from './data.js';
-const mockData = makeOffersList();
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const cardsListFragment = document.createDocumentFragment();
 const photosFragment = document.createDocumentFragment();
 const featuresFragment = document.createDocumentFragment();
 
-const TYPES = {
+const placeTypes = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
@@ -46,7 +44,7 @@ const makeCard = (element) => {
   titleText.textContent = element.offer.title;
   addressText.textContent = element.offer.address;
   priceText.textContent = `${element.offer.price  } ₽/ночь`;
-  typeText.textContent = TYPES[element.offer.type];
+  typeText.textContent = placeTypes[element.offer.type];
   capactityText.textContent = `${element.offer.rooms  } комнаты для ${ element.offer.guests  } гостей`;
   timeText.textContent = `Заезд после ${  element.offer.checkin  }, выезд до ${  element.offer.checkout}`;
   descriptionText.textContent = element.offer.description;
@@ -55,8 +53,8 @@ const makeCard = (element) => {
   photoContainer.append(photosFragment);
   featureContainer.append(featuresFragment);
   cardsListFragment.appendChild(card);
+
+  return card;
 };
 
-mockData.forEach(makeCard);
-
-export {cardsListFragment};
+export {makeCard};
