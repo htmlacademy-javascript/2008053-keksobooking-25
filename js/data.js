@@ -1,6 +1,6 @@
 import { getRandomFloat, getRandomInteger } from './util.js';
 
-const TYPE_VALUES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const PLACE_VALUES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECK_TIMES = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTOS = [
@@ -8,7 +8,7 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
-const typeStrings = {
+const placeDescriptions = {
   palace: 'Роскошный дворец',
   flat: 'Стильная квартира',
   house: 'Прекрасный дом',
@@ -41,7 +41,7 @@ const getLocation = () => ({
 });
 
 const getOfferData = () => {
-  const placeType = TYPE_VALUES[getRandomInteger(0, 4)];
+  const placeType = PLACE_VALUES[getRandomInteger(0, 4)];
   const roomNumber = getRandomInteger(1, 100);
 
   return {
@@ -54,7 +54,7 @@ const getOfferData = () => {
     checkin: CHECK_TIMES[getRandomInteger(0, 2)],
     checkout: CHECK_TIMES[getRandomInteger(0, 2)],
     features: getFeatures(),
-    description: `${typeStrings[placeType]  } в центре Токио`,
+    description: `${placeDescriptions[placeType]  } в центре Токио`,
     photos: PHOTOS.slice(getRandomInteger(0, 2))
   };
 };

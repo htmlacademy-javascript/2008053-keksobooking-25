@@ -4,7 +4,11 @@ const typeMenu = offerForm.querySelector('#type');
 const priceForm = offerForm.querySelector('#price');
 const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
+const timeIn = offerForm.querySelector('#timein');
+const timeOut = offerForm.querySelector('#timeout');
+
 const MAX_ROOMS = 100;
+
 const minPrices = {
   bungalow: 0,
   flat: 1000,
@@ -51,10 +55,16 @@ typeMenu.addEventListener('change', () => {
   priceForm.placeholder = `От ${  minPrices[typeMenu.value]}`;
 });
 
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
+
 offerForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
   }
 });
-
-export {offerForm, typeMenu, priceForm, minPrices};
