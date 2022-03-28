@@ -1,4 +1,5 @@
 import { disableElement, enableElement } from './util.js';
+import { openUserModal } from './form-modal.js';
 
 const offerForm = document.querySelector('.ad-form');
 const formElements = offerForm.querySelectorAll('.ad-form__element');
@@ -7,7 +8,9 @@ const mapFilterForm = mapFilterFormContainer.querySelector('.map__filters');
 const mapBasicFilters = mapFilterForm.querySelectorAll('.map__filter');
 const mapFeatureFilter = mapFilterForm.querySelector('.map__features');
 const sliderElement = offerForm.querySelector('.ad-form__slider');
-
+const submitButton = offerForm.querySelector('.ad-form__submit');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const disablePage = () => {
   offerForm.classList.add('ad-form--disabled');
@@ -27,6 +30,26 @@ const enablePage = () => {
   enableElement(sliderElement);
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const formSuccess = () => {
+  openUserModal(successTemplate);
+  unblockSubmitButton();
+};
+
+const formError = () => {
+  openUserModal(errorTemplate);
+  unblockSubmitButton();
+};
+
 disablePage();
 
-export { enablePage };
+export { enablePage, blockSubmitButton, formSuccess, formError };
