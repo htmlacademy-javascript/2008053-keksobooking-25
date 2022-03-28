@@ -26,12 +26,12 @@ const openUserModal = (template) => {
 };
 
 const createDataErrorModal = (error) => {
-  const dataErrorPopup = dataErrorTemplate.cloneNode(true);
-  const dataErrorPopupTextElement = dataErrorPopup.querySelector('.data__error__message');
-  const dataErrorTemplateText = dataErrorPopupTextElement.innerHTML;
+  const dataErrorModal = dataErrorTemplate.cloneNode(true);
+  const dataErrorModalTextElement = dataErrorModal.querySelector('.data__error__message');
+  const dataErrorTemplateText = dataErrorModalTextElement.innerHTML;
 
-  dataErrorPopupTextElement.innerHTML = dataErrorTemplateText + error;
-  dataErrorFragment.appendChild(dataErrorPopup);
+  dataErrorModalTextElement.innerHTML = dataErrorTemplateText + error;
+  dataErrorFragment.appendChild(dataErrorModal);
   mapFilterFormContainer.appendChild(dataErrorFragment);
   mapFilterForm.classList.add('map__filters--disabled');
   mapBasicFilters.forEach(disableElement);

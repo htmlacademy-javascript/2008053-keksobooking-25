@@ -1,6 +1,7 @@
 import { sendData } from './api.js';
-import { openUserModal } from './form-modal.js';
-import { formReset } from './map.js';
+import { mapReset } from './map.js';
+import { resetSlider } from './slider.js';
+import { blockSubmitButton, formSuccess, formError } from './form-util.js';
 
 const offerSection = document.querySelector('.notice');
 const offerForm = offerSection.querySelector('.ad-form');
@@ -10,9 +11,6 @@ const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
 const timeIn = offerForm.querySelector('#timein');
 const timeOut = offerForm.querySelector('#timeout');
-const submitButton = offerForm.querySelector('.ad-form__submit');
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const MAX_ROOMS = 100;
 
@@ -53,16 +51,6 @@ const validateCapacity = () => {
 
 const validatePrice = () => priceForm.value ? !(priceForm.value < minPrices[typeMenu.value]) : true;
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикую...';
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-};
-
 pristine.addValidator(typeMenu, validatePrice, getPriceErrorMessage, 2, true);
 pristine.addValidator(capacityForm, validateCapacity, 'Количество гостей должно соответствовать количеству комнат', 2, true);
 pristine.addValidator(roomNumber, validateCapacity, getCapacityErrorMessage, 2, true);
@@ -88,23 +76,14 @@ offerForm.addEventListener('submit', (evt) => {
   if (isValid) {
     blockSubmitButton();
     sendData(
-      () => {
-        openUserModal(successTemplate);
-        unblockSubmitButton();
-        formReset();
-      },
-      () => {
-        openUserModal(errorTemplate);
-        unblockSubmitButton();
-      },
+      formSuccess,
+      formError,
       new FormData(evt.target)
     );
-  } else {
-    openUserModal(errorTemplate);
   }
 });
 
-offerForm.addEventListener('reset', (evt) => {
-  evt.preventDefault();
-  formReset();
+offerForm.addEventListener('reset', () => {
+  resetSlider();
+  mapReset();
 });

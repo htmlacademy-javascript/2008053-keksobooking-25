@@ -1,7 +1,9 @@
 import { createDataErrorModal } from './form-modal.js';
 
+const dataUrl = 'https://25.javascript.pages.academy/keksobooking/data';
+
 const getData = () => fetch(
-  'https://25.javascript.pages.academy/keksobooking/data')
+  dataUrl)
   .then((response) => {
     if (response.ok) {
       return response.json();
@@ -9,10 +11,7 @@ const getData = () => fetch(
 
     throw new Error(`${response.status} ${response.statusText}`);
   })
-  .then((data) => data)
-  .catch((err) => {
-    createDataErrorModal(err);
-  });
+  .catch((err) => createDataErrorModal(err));
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
