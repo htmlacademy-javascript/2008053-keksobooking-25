@@ -1056,3 +1056,13 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/**
+*Сообщения об ошибке загрузки данных
+*/
+.data__error {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  color: darkred;
+  text-align: center;
+}

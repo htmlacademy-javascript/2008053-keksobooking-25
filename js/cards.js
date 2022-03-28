@@ -47,10 +47,19 @@ const makeCard = (element) => {
   capactityText.textContent = `${element.offer.rooms  } комнаты для ${ element.offer.guests  } гостей`;
   timeText.textContent = `Заезд после ${  element.offer.checkin  }, выезд до ${  element.offer.checkout}`;
   descriptionText.textContent = element.offer.description;
-  photos.forEach(getPhotos, photoContainer);
-  features.forEach(getFeatures, featureContainer);
-  photoContainer.append(photosFragment);
-  featureContainer.append(featuresFragment);
+  if (features) {
+    features.forEach(getFeatures, featureContainer);
+    featureContainer.append(featuresFragment);
+  } else {
+    featureContainer.classList.add('hidden');
+  }
+  if (photos) {
+    photos.forEach(getPhotos, photoContainer);
+    photoContainer.append(photosFragment);
+  } else {
+    photoContainer.classList.add('hidden');
+  }
+
   cardsListFragment.appendChild(card);
 
   return card;

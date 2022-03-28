@@ -2,10 +2,12 @@ import { disableElement, enableElement } from './util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const formElements = offerForm.querySelectorAll('.ad-form__element');
-const mapFilterForm = document.querySelector('.map__filters');
+const mapFilterFormContainer = document.querySelector('.map__filters-container');
+const mapFilterForm = mapFilterFormContainer.querySelector('.map__filters');
 const mapBasicFilters = mapFilterForm.querySelectorAll('.map__filter');
 const mapFeatureFilter = mapFilterForm.querySelector('.map__features');
 const sliderElement = offerForm.querySelector('.ad-form__slider');
+
 
 const disablePage = () => {
   offerForm.classList.add('ad-form--disabled');

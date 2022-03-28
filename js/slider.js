@@ -17,6 +17,12 @@ const updateSlider = () => {
   sliderElement.noUiSlider.set(priceForm.value);
 };
 
+const resetSlider = () => {
+  sliderElement.noUiSlider.updateOptions({
+    start: DEFAULT_PRICE
+  });
+};
+
 noUiSlider.create(sliderElement, {
   range: {
     min: DEFAULT_PRICE,
@@ -36,3 +42,6 @@ sliderElement.noUiSlider.on('slide', () => {
 });
 
 typeMenu.addEventListener('change', updateSlider);
+
+export {resetSlider};
+

@@ -1,3 +1,7 @@
+import { sendData } from './api.js';
+import { openUserModal } from './form-modal.js';
+import { formReset } from './map.js';
+
 const offerSection = document.querySelector('.notice');
 const offerForm = offerSection.querySelector('.ad-form');
 const typeMenu = offerForm.querySelector('#type');
@@ -6,6 +10,9 @@ const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
 const timeIn = offerForm.querySelector('#timein');
 const timeOut = offerForm.querySelector('#timeout');
+const submitButton = offerForm.querySelector('.ad-form__submit');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const MAX_ROOMS = 100;
 
@@ -46,13 +53,23 @@ const validateCapacity = () => {
 
 const validatePrice = () => priceForm.value ? !(priceForm.value < minPrices[typeMenu.value]) : true;
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
 pristine.addValidator(typeMenu, validatePrice, getPriceErrorMessage, 2, true);
 pristine.addValidator(capacityForm, validateCapacity, 'Количество гостей должно соответствовать количеству комнат', 2, true);
 pristine.addValidator(roomNumber, validateCapacity, getCapacityErrorMessage, 2, true);
 
 typeMenu.addEventListener('change', () => {
   priceForm.min = minPrices[typeMenu.value];
-  priceForm.placeholder = `От ${  minPrices[typeMenu.value]}`;
+  priceForm.placeholder = `От ${  minPrices[typeMenu.value]} ₽/ночь`;
 });
 
 timeIn.addEventListener('change', () => {
@@ -64,7 +81,30 @@ timeOut.addEventListener('change', () => {
 });
 
 offerForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    blockSubmitButton();
+    sendData(
+      () => {
+        openUserModal(successTemplate);
+        unblockSubmitButton();
+        formReset();
+      },
+      () => {
+        openUserModal(errorTemplate);
+        unblockSubmitButton();
+      },
+      new FormData(evt.target)
+    );
+  } else {
+    openUserModal(errorTemplate);
   }
+});
+
+offerForm.addEventListener('reset', (evt) => {
+  evt.preventDefault();
+  formReset();
 });
