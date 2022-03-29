@@ -1,4 +1,3 @@
-
 import { getData } from './api.js';
 import { makeCard } from './cards.js';
 import { enableMapFilters } from './form-util.js';
