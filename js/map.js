@@ -1,4 +1,4 @@
-import { enablePage } from './form-util.js';
+import { enableForm } from './form-util.js';
 import { map, mainMarker } from './map-util.js';
 
 const addressForm = document.querySelector('#address');
@@ -11,7 +11,7 @@ const DEFAULT_LNG = 139.75392;
 
 map
   .on('load', () => {
-    enablePage();
+    enableForm();
     addressForm.value = `${DEFAULT_LAT  }, ${  DEFAULT_LNG}`;
   })
   .setView({

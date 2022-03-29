@@ -1,6 +1,7 @@
 
 import { getData } from './api.js';
 import { makeCard } from './cards.js';
+import { enableMapFilters } from './form-util.js';
 
 const MAP_CLASS = 'map-canvas';
 const DEFAULT_LAT = 35.68172;
@@ -70,6 +71,7 @@ const createPoints = () => {
   points()
     .then((data) => {
       data.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
+      enableMapFilters();
     });
 };
 

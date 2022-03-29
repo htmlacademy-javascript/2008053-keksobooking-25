@@ -1,12 +1,8 @@
-import { disableElement, enableElement } from './util.js';
 import { createPoints } from './map-util.js';
 
 const offerForm = document.querySelector('.ad-form');
 
 const mapFilterFormContainer = document.querySelector('.map__filters-container');
-const mapFilterForm = mapFilterFormContainer.querySelector('.map__filters');
-const mapBasicFilters = mapFilterForm.querySelectorAll('.map__filter');
-const mapFeatureFilter = mapFilterForm.querySelector('.map__features');
 
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data__error');
 const dataErrorFragment = document.createDocumentFragment();
@@ -39,13 +35,9 @@ const createDataErrorModal = () => {
 
   dataErrorFragment.appendChild(dataErrorModal);
   mapFilterFormContainer.appendChild(dataErrorFragment);
-  mapFilterForm.classList.add('map__filters--disabled');
-  mapBasicFilters.forEach(disableElement);
-  disableElement(mapFeatureFilter);
 
   dataErrorModalRetryButton.addEventListener('click', (evt) =>{
     evt.preventDefault();
-    enableElement(mapFeatureFilter);
     closeDataErrorModal();
     createPoints();
   });

@@ -21,13 +21,16 @@ const disablePage = () => {
   disableElement(sliderElement);
 };
 
-const enablePage = () => {
+const enableForm = () => {
   offerForm.classList.remove('ad-form--disabled');
-  mapFilterForm.classList.remove('map__filters--disabled');
   formElements.forEach(enableElement);
+  enableElement(sliderElement);
+};
+
+const enableMapFilters = () => {
+  mapFilterForm.classList.remove('map__filters--disabled');
   mapBasicFilters.forEach(enableElement);
   enableElement(mapFeatureFilter);
-  enableElement(sliderElement);
 };
 
 const blockSubmitButton = () => {
@@ -53,4 +56,4 @@ const formError = () => {
 
 disablePage();
 
-export { enablePage, blockSubmitButton, formSuccess, formError };
+export { enableForm, enableMapFilters, blockSubmitButton, formSuccess, formError };
