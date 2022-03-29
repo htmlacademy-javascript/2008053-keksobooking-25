@@ -42,6 +42,7 @@ const unblockSubmitButton = () => {
 
 const formSuccess = () => {
   openUserModal(successTemplate);
+  offerForm.reset();
   unblockSubmitButton();
 };
 

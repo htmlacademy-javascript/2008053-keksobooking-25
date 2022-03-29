@@ -1,4 +1,5 @@
-import { disableElement } from './util.js';
+import { disableElement, enableElement } from './util.js';
+import { createPoints } from './map-util.js';
 
 const offerForm = document.querySelector('.ad-form');
 
@@ -25,17 +26,34 @@ const openUserModal = (template) => {
   document.addEventListener('keydown', closeUserModal);
 };
 
-const createDataErrorModal = (error) => {
-  const dataErrorModal = dataErrorTemplate.cloneNode(true);
-  const dataErrorModalTextElement = dataErrorModal.querySelector('.data__error__message');
-  const dataErrorTemplateText = dataErrorModalTextElement.innerHTML;
+const closeDataErrorModal = () => {
+  const modal = mapFilterFormContainer.lastChild;
 
-  dataErrorModalTextElement.innerHTML = dataErrorTemplateText + error;
+  mapFilterFormContainer.removeChild(modal);
+};
+
+const createDataErrorModal = () => {
+  const dataErrorModal = dataErrorTemplate.cloneNode(true);
+  const dataErrorModalRetryButton = dataErrorModal.querySelector('#data-error-retry-button');
+  const dataErrorModalCloseButton = dataErrorModal.querySelector('#data-error-close-button');
+
   dataErrorFragment.appendChild(dataErrorModal);
   mapFilterFormContainer.appendChild(dataErrorFragment);
   mapFilterForm.classList.add('map__filters--disabled');
   mapBasicFilters.forEach(disableElement);
   disableElement(mapFeatureFilter);
+
+  dataErrorModalRetryButton.addEventListener('click', (evt) =>{
+    evt.preventDefault();
+    enableElement(mapFeatureFilter);
+    closeDataErrorModal();
+    createPoints();
+  });
+
+  dataErrorModalCloseButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    closeDataErrorModal();
+  });
 };
 
 export { createDataErrorModal, openUserModal };
