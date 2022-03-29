@@ -1078,6 +1078,8 @@ fieldset {
   padding: 9px;
   font-weight: 500;
   color: white;
+  border: 3px solid;
+  border-radius: 8px;
 }
 
 .data-error__button:hover,
@@ -1095,13 +1097,11 @@ fieldset {
 }
 
 .data-error__button--retry {
-  border: 3px solid darkgreen;
+  border-color: darkgreen;
   background-color: green;
-  border-radius: 8px;
 }
 
 .data-error__button--close {
-  border: 3px solid darkred;
+  border-color: darkred;
   background-color: #ff5635;
-  border-radius: 8px;
 }
