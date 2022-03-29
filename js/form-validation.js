@@ -1,3 +1,8 @@
+import { sendData } from './api.js';
+import { mapReset } from './map-util.js';
+import { resetSlider } from './slider.js';
+import { blockSubmitButton, formSuccess, formError } from './form-util.js';
+
 const offerSection = document.querySelector('.notice');
 const offerForm = offerSection.querySelector('.ad-form');
 const typeMenu = offerForm.querySelector('#type');
@@ -52,7 +57,7 @@ pristine.addValidator(roomNumber, validateCapacity, getCapacityErrorMessage, 2, 
 
 typeMenu.addEventListener('change', () => {
   priceForm.min = minPrices[typeMenu.value];
-  priceForm.placeholder = `От ${  minPrices[typeMenu.value]}`;
+  priceForm.placeholder = `От ${  minPrices[typeMenu.value]} ₽/ночь`;
 });
 
 timeIn.addEventListener('change', () => {
@@ -64,7 +69,21 @@ timeOut.addEventListener('change', () => {
 });
 
 offerForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    blockSubmitButton();
+    sendData(
+      formSuccess,
+      formError,
+      new FormData(evt.target)
+    );
   }
+});
+
+offerForm.addEventListener('reset', () => {
+  resetSlider();
+  mapReset();
 });

@@ -1,5 +1,4 @@
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const cardsListFragment = document.createDocumentFragment();
 const photosFragment = document.createDocumentFragment();
 const featuresFragment = document.createDocumentFragment();
 
@@ -24,11 +23,17 @@ const getFeatures = function (feature) {
   featuresFragment.appendChild(featureItem);
 };
 
+const fillContainer = (type, cb, container, fragment) => {
+  type.forEach(cb, container);
+  container.append(fragment);
+};
+
+const insertFeatures = (features, container) => features ? fillContainer(features, getFeatures, container, featuresFragment) : container.classList.add('hidden');
+const inserPhotos = (photos, container) => photos ? fillContainer(photos, getPhotos, container, photosFragment) : container.classList.add('hidden');
+
 const makeCard = (element) => {
-  const features = element.offer.features;
-  const photos = element.offer.photos;
   const card = cardTemplate.cloneNode(true);
-  const photoContainer = card.querySelector('.popup__photos');
+
   const userAvatar = card.querySelector('.popup__avatar');
   const titleText = card.querySelector('.popup__title');
   const addressText = card.querySelector('.popup__text--address');
@@ -38,6 +43,10 @@ const makeCard = (element) => {
   const timeText = card.querySelector('.popup__text--time');
   const descriptionText = card.querySelector('.popup__description');
   const featureContainer = card.querySelector('.popup__features');
+  const photoContainer = card.querySelector('.popup__photos');
+
+  const features = element.offer.features;
+  const photos = element.offer.photos;
 
   userAvatar.src = element.author.avatar;
   titleText.textContent = element.offer.title;
@@ -47,11 +56,9 @@ const makeCard = (element) => {
   capactityText.textContent = `${element.offer.rooms  } комнаты для ${ element.offer.guests  } гостей`;
   timeText.textContent = `Заезд после ${  element.offer.checkin  }, выезд до ${  element.offer.checkout}`;
   descriptionText.textContent = element.offer.description;
-  photos.forEach(getPhotos, photoContainer);
-  features.forEach(getFeatures, featureContainer);
-  photoContainer.append(photosFragment);
-  featureContainer.append(featuresFragment);
-  cardsListFragment.appendChild(card);
+
+  insertFeatures(features, featureContainer);
+  inserPhotos(photos, photoContainer);
 
   return card;
 };
