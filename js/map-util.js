@@ -74,5 +74,4 @@ const createPoints = () => {
     });
 };
 
-
-export { map, mainMarker, mapReset, createMarker, createPoints };
+export { map, mainMarker, markerGroup, mapReset, createMarker, points, createPoints };
