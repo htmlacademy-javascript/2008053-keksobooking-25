@@ -66,8 +66,8 @@ const createMarker = (data) => {
 
 const points = async () => await getData();
 
-const createPoints = () => {
-  points()
+const createPoints = (offers) => {
+  offers
     .then((data) => {
       data.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
       enableMapFilters();

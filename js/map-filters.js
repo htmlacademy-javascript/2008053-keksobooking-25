@@ -1,5 +1,5 @@
 import { debounce } from './util.js';
-import { markerGroup, createMarker, mapReset, points } from './map-util.js';
+import { markerGroup, createMarker, mapReset } from './map-util.js';
 
 const mapFiltersContainer = document.querySelector('.map__filters-container');
 const mapTypeFilter = mapFiltersContainer.querySelector('#housing-type');
@@ -12,13 +12,13 @@ const mapFeatureFilters = mapFeatureFiltersContainer.querySelectorAll('.map__che
 const MAX_SIMILAR_OFFERS = 10;
 const DEFAULT_FILTER_INDEX = 0;
 
+const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
 const priceRanges = {
   middle: 'middle',
   high: 'high',
   low: 'low'
 };
-
-const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
 const priceMargins = {
   high: 50000,
@@ -39,10 +39,10 @@ const filterPrice = (price, range) => {
   }
 };
 
-const filterPoints = () => {
+const filterPoints = (offers) => {
   markerGroup.clearLayers();
   mapReset();
-  points()
+  offers
     .then((data) => {
       let filteredData = data;
 
@@ -72,7 +72,7 @@ const filterPoints = () => {
     });
 };
 
-const addFeatureFilterHandlers = (feature, index) => {
+const addFeatureFilterHandlers = (offers) => (feature, index) => {
 
   feature.addEventListener('change', debounce(() => {
     selectedFeatures = selectedFeatures.filter((element) => element !== features[index]);
@@ -81,48 +81,64 @@ const addFeatureFilterHandlers = (feature, index) => {
       selectedFeatures.push(features[index]);
     }
 
-    filterPoints();
+    filterPoints(offers);
   }));
 };
 
-mapTypeFilter.addEventListener('change', debounce(() => {
-  selectedType = '';
+const addTypeFilterHandler = (offers) => {
+  mapTypeFilter.addEventListener('change', debounce(() => {
+    selectedType = '';
 
-  if (mapTypeFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
-    selectedType = mapTypeFilter.value;
-  }
+    if (mapTypeFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
+      selectedType = mapTypeFilter.value;
+    }
 
-  filterPoints();
-}));
+    filterPoints(offers);
+  }));
+};
 
-mapPriceFilter.addEventListener('change', debounce(() => {
-  selectedPriceRange = '';
+const addPriceFilterHandler = (offers) => {
+  mapPriceFilter.addEventListener('change', debounce(() => {
+    selectedPriceRange = '';
 
-  if (mapPriceFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
-    selectedPriceRange = mapPriceFilter.value;
-  }
+    if (mapPriceFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
+      selectedPriceRange = mapPriceFilter.value;
+    }
 
-  filterPoints();
-}));
+    filterPoints(offers);
+  }));
+};
 
-mapRoomsFilter.addEventListener('change', debounce(() => {
-  selectedRooms = '';
+const addRoomsFilterHandler = (offers) => {
+  mapRoomsFilter.addEventListener('change', debounce(() => {
+    selectedRooms = '';
 
-  if (mapRoomsFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
-    selectedRooms = Number(mapRoomsFilter.value);
-  }
+    if (mapRoomsFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
+      selectedRooms = Number(mapRoomsFilter.value);
+    }
 
-  filterPoints();
-}));
+    filterPoints(offers);
+  }));
+};
 
-mapCapactityFilter.addEventListener('change', debounce(() => {
-  selectedCapacity = '';
+const addCapacityFilterHandler = (offers) => {
 
-  if (mapCapactityFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
-    selectedCapacity = Number(mapCapactityFilter.value);
-  }
+  mapCapactityFilter.addEventListener('change', debounce(() => {
+    selectedCapacity = '';
 
-  filterPoints();
-}));
+    if (mapCapactityFilter.selectedIndex !== DEFAULT_FILTER_INDEX) {
+      selectedCapacity = Number(mapCapactityFilter.value);
+    }
 
-mapFeatureFilters.forEach(addFeatureFilterHandlers);
+    filterPoints(offers);
+  }));};
+
+const addMapFilterHandlers = (offers) => {
+  addTypeFilterHandler(offers);
+  addPriceFilterHandler(offers);
+  addRoomsFilterHandler(offers);
+  addCapacityFilterHandler(offers);
+  mapFeatureFilters.forEach(addFeatureFilterHandlers(offers));
+};
+
+export { addMapFilterHandlers };
