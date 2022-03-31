@@ -1,4 +1,4 @@
-import { getData } from './api.js';
+import { offersData } from './api.js';
 import { makeCard } from './cards.js';
 import { enableMapFilters } from './form-util.js';
 
@@ -55,23 +55,21 @@ const mapReset = () => {
   });
 };
 
-const createMarker = (data) => {
-  L.marker([data.location.lat, data.location.lng],
+const createMarker = (offer) => {
+  L.marker([offer.location.lat, offer.location.lng],
     {
       pinIcon,
     })
     .addTo(markerGroup)
-    .bindPopup(makeCard(data));
+    .bindPopup(makeCard(offer));
 };
 
-const points = async () => await getData();
-
-const createPoints = () => {
-  points()
-    .then((data) => {
-      data.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
-      enableMapFilters();
-    });
+const createPoints = async () => {
+  const offers = await offersData();
+  offers.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
+  enableMapFilters();
 };
 
-export { map, mainMarker, markerGroup, mapReset, createMarker, points, createPoints };
+createPoints();
+
+export { map, mainMarker, markerGroup, mapReset, createMarker, createPoints };
