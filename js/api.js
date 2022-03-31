@@ -31,4 +31,6 @@ const sendData = (onSuccess, onFail, body) => fetch(
     onFail();
   });
 
-export {getData, sendData};
+const offersData = async () => await getData();
+
+export {sendData, offersData};
