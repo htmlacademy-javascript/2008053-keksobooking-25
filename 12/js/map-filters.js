@@ -1,5 +1,5 @@
 import { debounce } from './util.js';
-import { offersData } from './api.js';
+import { offers } from './api.js';
 import { markerGroup, createMarker, mapReset } from './map-util.js';
 
 const mapFiltersContainer = document.querySelector('.map__filters-container');
@@ -11,12 +11,13 @@ const MAX_SIMILAR_OFFERS = 10;
 const DEFAULT_FILTER_INDEX = 0;
 
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const filters = ['type', 'price', 'rooms', 'guests'];
 
-const Filters = {
-  TYPE: 0,
-  PRICE: 1,
-  ROOMS: 2,
-  GUESTS: 3
+const FilterValues = {
+  TYPE: 'type',
+  PRICE: 'price',
+  ROOMS: 'rooms',
+  GUESTS: 'guests'
 };
 
 const PriceRanges = {
@@ -32,6 +33,8 @@ const priceMargins = {
 
 const selectedFilters = [];
 
+const offersData = offers;
+
 let selectedFeatures = [];
 
 const filterPrice = (price, range) => {
@@ -46,23 +49,27 @@ const filterPrice = (price, range) => {
 };
 
 const filterPoints = async () => {
-  const offers = await offersData();
-  let filteredData = offers;
+  const type = selectedFilters[filters.indexOf(FilterValues.TYPE)];
+  const price = selectedFilters[filters.indexOf(FilterValues.PRICE)];
+  const rooms = selectedFilters[filters.indexOf(FilterValues.ROOMS)];
+  const guests = selectedFilters[filters.indexOf(FilterValues.GUESTS)];
+
+  let filteredData = await offersData;
 
   markerGroup.clearLayers();
   mapReset();
 
-  if (selectedFilters[Filters.TYPE]) {
-    filteredData = filteredData.filter((element) => element.offer.type === selectedFilters[Filters.TYPE]);
+  if (type) {
+    filteredData = filteredData.filter((element) => element.offer.type === type);
   }
-  if (selectedFilters[Filters.PRICE]) {
-    filteredData = filteredData.filter((element) => filterPrice(element.offer.price, selectedFilters[Filters.PRICE]));
+  if (price) {
+    filteredData = filteredData.filter((element) => filterPrice(element.offer.price, price));
   }
-  if (selectedFilters[Filters.ROOMS]) {
-    filteredData = filteredData.filter((element) => element.offer.rooms === Number(selectedFilters[Filters.ROOMS]));
+  if (rooms) {
+    filteredData = filteredData.filter((element) => element.offer.rooms === Number(rooms));
   }
-  if (selectedFilters[Filters.GUESTS]) {
-    filteredData = filteredData.filter((element) => element.offer.guests === Number(selectedFilters[Filters.GUESTS]));
+  if (guests) {
+    filteredData = filteredData.filter((element) => element.offer.guests === Number(guests));
   }
   if (selectedFeatures !== []) {
     for (let i = 0; i < selectedFeatures.length; i++) {
