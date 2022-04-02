@@ -1,5 +1,4 @@
 import { debounce } from './util.js';
-import { offers } from './api.js';
 import { markerGroup, createMarker, mapReset } from './map-util.js';
 
 const mapFiltersContainer = document.querySelector('.map__filters-container');
@@ -33,8 +32,6 @@ const priceMargins = {
 
 const selectedFilters = [];
 
-const offersData = offers;
-
 let selectedFeatures = [];
 
 const filterPrice = (price, range) => {
@@ -48,13 +45,13 @@ const filterPrice = (price, range) => {
   }
 };
 
-const filterPoints = async () => {
+const filterPoints = (offers) => {
   const type = selectedFilters[filters.indexOf(FilterValues.TYPE)];
   const price = selectedFilters[filters.indexOf(FilterValues.PRICE)];
   const rooms = selectedFilters[filters.indexOf(FilterValues.ROOMS)];
   const guests = selectedFilters[filters.indexOf(FilterValues.GUESTS)];
 
-  let filteredData = await offersData;
+  let filteredData = offers;
 
   markerGroup.clearLayers();
   mapReset();
@@ -80,29 +77,29 @@ const filterPoints = async () => {
   filteredData.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
 };
 
-const addFeatureFilterHandlers = (feature, index) => {
+const addFeatureFilterHandlers = (offers) => (feature, index) => {
   feature.addEventListener('change', debounce(() => {
     selectedFeatures = selectedFeatures.filter((element) => element !== features[index]);
     if (mapFeatureFilters[index].checked) {
       selectedFeatures.push(features[index]);
     }
-    filterPoints();
+    filterPoints(offers);
   }));
 };
 
-const addFilterHandlers = (filter, index) => {
+const addFilterHandlers = (offers) => (filter, index) => {
   filter.addEventListener('change', debounce(() => {
     selectedFilters[index] = '';
     if (filter.selectedIndex !== DEFAULT_FILTER_INDEX) {
       selectedFilters[index] = filter.value;
     }
-    filterPoints();
+    filterPoints(offers);
   }));
 };
 
-const addMapFilterHandlers = () => {
-  mapFilters.forEach(addFilterHandlers);
-  mapFeatureFilters.forEach(addFeatureFilterHandlers);
+const addMapFilterHandlers = (offers) => {
+  mapFilters.forEach(addFilterHandlers(offers));
+  mapFeatureFilters.forEach(addFeatureFilterHandlers(offers));
 };
 
-addMapFilterHandlers();
+export { addMapFilterHandlers };
