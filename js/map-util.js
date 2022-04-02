@@ -1,4 +1,3 @@
-import { offers } from './api.js';
 import { makeCard } from './cards.js';
 import { enableMapFilters } from './form-util.js';
 
@@ -43,8 +42,6 @@ const pinIcon = L.icon({
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const offersData = offers;
-
 const mapReset = () => {
   map.setView({
     lat: DEFAULT_LAT,
@@ -66,13 +63,9 @@ const createMarker = (offer) => {
     .bindPopup(makeCard(offer));
 };
 
-const createPoints = async () => {
-  const data = await offersData;
-
-  data.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
+const createPoints = (offers) => {
+  offers.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
   enableMapFilters();
 };
-
-createPoints();
 
 export { map, mainMarker, markerGroup, mapReset, createMarker, createPoints };
