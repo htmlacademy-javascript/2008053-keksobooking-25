@@ -3,7 +3,7 @@ import { openUserModal } from './form-modal.js';
 import { mapReset } from './map-util.js';
 import { sliderReset } from './slider.js';
 import { imageFormReset } from './form-images.js';
-
+import { validationReset } from './form-validation.js';
 
 const offerForm = document.querySelector('.ad-form');
 
@@ -51,6 +51,7 @@ const formReset = () => {
   mapReset();
   sliderReset();
   imageFormReset();
+  validationReset();
 };
 
 const formSuccess = () => {
