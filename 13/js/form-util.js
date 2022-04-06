@@ -1,7 +1,12 @@
 import { disableElement, enableElement } from './util.js';
 import { openUserModal } from './form-modal.js';
+import { mapReset } from './map-util.js';
+import { sliderReset } from './slider.js';
+import { imageFormReset } from './form-images.js';
+
 
 const offerForm = document.querySelector('.ad-form');
+
 const formElements = offerForm.querySelectorAll('.ad-form__element');
 const mapFilterFormContainer = document.querySelector('.map__filters-container');
 const mapFilterForm = mapFilterFormContainer.querySelector('.map__filters');
@@ -42,10 +47,16 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
+const formReset = () => {
+  mapReset();
+  sliderReset();
+  imageFormReset();
+};
 
 const formSuccess = () => {
   openUserModal(successTemplate);
   offerForm.reset();
+  formReset();
   unblockSubmitButton();
 };
 
@@ -56,4 +67,4 @@ const formError = () => {
 
 disablePage();
 
-export { enableForm, enableMapFilters, blockSubmitButton, formSuccess, formError };
+export { enableForm, enableMapFilters, blockSubmitButton, formReset, formSuccess, formError };

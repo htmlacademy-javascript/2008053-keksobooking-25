@@ -950,6 +950,54 @@ fieldset {
   border: 2px solid #ff5635;
 }
 
+/**
+*Сообщения об ошибке загрузки данных
+*/
+.data-error {
+  position: relative;
+  z-index: 1100;
+
+  padding-bottom: 10px;
+
+  text-align: center;
+  color: white;
+
+  vertical-align: middle;
+
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.data-error__button {
+  padding: 9px;
+  font-weight: 500;
+  color: white;
+  border: 3px solid;
+  border-radius: 8px;
+}
+
+.data-error__button:hover,
+.data-error__button:focus {
+  opacity: 0.8;
+}
+
+.data-error__button:focus {
+  outline: none;
+}
+
+.data-error__button:active {
+  outline: none;
+  opacity: 0.6;
+}
+
+.data-error__button--retry {
+  border-color: darkgreen;
+  background-color: green;
+}
+
+.data-error__button--close {
+  border-color: darkred;
+  background-color: #ff5635;
+}
 
 /**
  * Сообщения об успешном и неуспешном создании объявления
@@ -1060,3 +1108,4 @@ fieldset {
 .hidden {
   display: none;
 }
+

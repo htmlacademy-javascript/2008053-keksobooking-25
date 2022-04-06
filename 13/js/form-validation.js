@@ -1,7 +1,5 @@
 import { sendData } from './api.js';
-import { mapReset } from './map-util.js';
-import { resetSlider } from './slider.js';
-import { blockSubmitButton, formSuccess, formError } from './form-util.js';
+import { blockSubmitButton, formReset, formSuccess, formError } from './form-util.js';
 
 const offerSection = document.querySelector('.notice');
 const offerForm = offerSection.querySelector('.ad-form');
@@ -84,6 +82,5 @@ offerForm.addEventListener('submit', (evt) => {
 });
 
 offerForm.addEventListener('reset', () => {
-  resetSlider();
-  mapReset();
+  formReset();
 });
