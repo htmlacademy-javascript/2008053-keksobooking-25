@@ -65,6 +65,4 @@ const formError = () => {
   unblockSubmitButton();
 };
 
-disablePage();
-
-export { enableForm, enableMapFilters, blockSubmitButton, formReset, formSuccess, formError };
+export { disablePage, enableForm, enableMapFilters, blockSubmitButton, formReset, formSuccess, formError };

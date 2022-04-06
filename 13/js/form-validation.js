@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { blockSubmitButton, formReset, formSuccess, formError } from './form-util.js';
+import { blockSubmitButton, formSuccess, formError } from './form-util.js';
 
 const offerSection = document.querySelector('.notice');
 const offerForm = offerSection.querySelector('.ad-form');
@@ -7,10 +7,9 @@ const typeMenu = offerForm.querySelector('#type');
 const priceForm = offerForm.querySelector('#price');
 const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
-const timeIn = offerForm.querySelector('#timein');
-const timeOut = offerForm.querySelector('#timeout');
 
 const MAX_ROOMS = 100;
+const CAPACITY_ERROR_MESSAGE = 'Количество гостей должно соответствовать количеству комнат';
 
 const minPrices = {
   bungalow: 0,
@@ -29,7 +28,7 @@ const pristine = new Pristine(offerForm, {
 
 const getPriceErrorMessage = () => `Для данного типа жилья минимальная стоимость ${  minPrices[typeMenu.value]}`;
 
-const getCapacityErrorMessage = (value) => {
+const getRoomsErrorMessage = (value) => {
   const rooms = Number(value);
   if (rooms === MAX_ROOMS) {
     return 'Выберите "не для гостей"';
@@ -50,21 +49,8 @@ const validateCapacity = () => {
 const validatePrice = () => priceForm.value ? !(priceForm.value < minPrices[typeMenu.value]) : true;
 
 pristine.addValidator(typeMenu, validatePrice, getPriceErrorMessage, 2, true);
-pristine.addValidator(capacityForm, validateCapacity, 'Количество гостей должно соответствовать количеству комнат', 2, true);
-pristine.addValidator(roomNumber, validateCapacity, getCapacityErrorMessage, 2, true);
-
-typeMenu.addEventListener('change', () => {
-  priceForm.min = minPrices[typeMenu.value];
-  priceForm.placeholder = `От ${  minPrices[typeMenu.value]} ₽/ночь`;
-});
-
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
-});
-
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
-});
+pristine.addValidator(capacityForm, validateCapacity, CAPACITY_ERROR_MESSAGE, 2, true);
+pristine.addValidator(roomNumber, validateCapacity, getRoomsErrorMessage, 2, true);
 
 offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -79,8 +65,4 @@ offerForm.addEventListener('submit', (evt) => {
       new FormData(evt.target)
     );
   }
-});
-
-offerForm.addEventListener('reset', () => {
-  formReset();
 });

@@ -1,7 +1,6 @@
-import { createPoints } from './map-util.js';
+import { fillMap } from './data.js';
 
 const offerForm = document.querySelector('.ad-form');
-
 const mapFilterFormContainer = document.querySelector('.map__filters-container');
 
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
@@ -39,7 +38,7 @@ const createDataErrorModal = () => {
   dataErrorModalRetryButton.addEventListener('click', (evt) =>{
     evt.preventDefault();
     closeDataErrorModal();
-    createPoints();
+    fillMap();
   });
 
   dataErrorModalCloseButton.addEventListener('click', (evt) => {
