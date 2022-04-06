@@ -1,13 +1,13 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-const PHOTO_CLASS = 'ad-form__photo';
-const AVATAR_PLACEHOLDER = 'img/muffin-grey.svg';
-
 const offerForm = document.querySelector('.ad-form');
 const avatarFileChooser = offerForm.querySelector('#avatar');
 const avatarPreviewElement = offerForm.querySelector('.ad-form-header__preview-avatar');
 const photoFileChooser = offerForm.querySelector('#images');
 const photoPreviewContainer = offerForm.querySelector('.ad-form__photo');
 const photoPreviewElement = document.createElement('img');
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const PHOTO_CLASS = 'ad-form__photo';
+const AVATAR_PLACEHOLDER = 'img/muffin-grey.svg';
 
 const showAvatarPreview = (file) => {
   avatarPreviewElement.src = URL.createObjectURL(file);
