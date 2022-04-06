@@ -1,7 +1,6 @@
 import './form-validation.js';
 import './form-images.js';
-import { formReset } from './form-util.js';
-import { disablePage } from './form-util.js';
+import { disablePage, formReset } from './form-util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const typeMenu = offerForm.querySelector('#type');
@@ -17,10 +16,12 @@ const minPrices = {
   palace: 10000
 };
 
-typeMenu.addEventListener('change', () => {
-  priceForm.min = minPrices[typeMenu.value];
-  priceForm.placeholder = `От ${  minPrices[typeMenu.value]} ₽/ночь`;
-});
+const priceTypeFormHandler = () => {
+  priceForm.setAttribute('min', minPrices[typeMenu.value]);
+  priceForm.placeholder = `От ${  priceForm.min} ₽/ночь`;
+};
+
+typeMenu.addEventListener('change', () => priceTypeFormHandler());
 
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
