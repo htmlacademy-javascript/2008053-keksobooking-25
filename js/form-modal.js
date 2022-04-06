@@ -1,7 +1,6 @@
 import { createPoints } from './map-util.js';
 
 const offerForm = document.querySelector('.ad-form');
-
 const mapFilterFormContainer = document.querySelector('.map__filters-container');
 
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
