@@ -1,6 +1,6 @@
 import './form-validation.js';
 import './form-images.js';
-import { disablePage, formReset } from './form-util.js';
+import { disablePage, formElementsReset } from './form-util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const typeMenu = offerForm.querySelector('#type');
@@ -32,7 +32,7 @@ timeOut.addEventListener('change', () => {
 });
 
 offerForm.addEventListener('reset', () => {
-  formReset();
+  formElementsReset();
 });
 
 disablePage();

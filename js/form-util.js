@@ -4,6 +4,8 @@ import { mapReset } from './map-util.js';
 import { sliderReset } from './slider.js';
 import { imageFormReset } from './form-images.js';
 import { validationReset } from './form-validation.js';
+import { mapFiltersReset } from './map-filters.js';
+import { fillMap } from './data.js';
 
 const offerForm = document.querySelector('.ad-form');
 
@@ -47,17 +49,19 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
-const formReset = () => {
+const formElementsReset = () => {
   mapReset();
   sliderReset();
   imageFormReset();
   validationReset();
+  mapFiltersReset();
+  fillMap();
 };
 
 const formSuccess = () => {
   openUserModal(successTemplate);
   offerForm.reset();
-  formReset();
+  formElementsReset();
   unblockSubmitButton();
 };
 
@@ -66,4 +70,4 @@ const formError = () => {
   unblockSubmitButton();
 };
 
-export { disablePage, enableForm, enableMapFilters, blockSubmitButton, formReset, formSuccess, formError };
+export { disablePage, enableForm, enableMapFilters, blockSubmitButton, formElementsReset, formSuccess, formError };

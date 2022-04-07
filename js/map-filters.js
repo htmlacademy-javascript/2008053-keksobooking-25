@@ -30,8 +30,7 @@ const PriceMargins = {
   BOTTOM: 10000
 };
 
-const selectedFilters = [];
-
+let selectedFilters = [];
 let selectedFeatures = [];
 
 const filterPrice = (price, range) => {
@@ -77,16 +76,6 @@ const filterPoints = (offers) => {
   filteredData.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
 };
 
-const addFeatureFilterHandlers = (offers) => (feature, index) => {
-  feature.addEventListener('change', debounce(() => {
-    selectedFeatures = selectedFeatures.filter((element) => element !== features[index]);
-    if (mapFeatureFilters[index].checked) {
-      selectedFeatures.push(features[index]);
-    }
-    filterPoints(offers);
-  }));
-};
-
 const addFilterHandlers = (offers) => (filter, index) => {
   filter.addEventListener('change', debounce(() => {
     selectedFilters[index] = '';
@@ -97,9 +86,31 @@ const addFilterHandlers = (offers) => (filter, index) => {
   }));
 };
 
+const addFeatureFilterHandlers = (offers) => (feature, index) => {
+  feature.addEventListener('change', debounce(() => {
+    selectedFeatures = selectedFeatures.filter((element) => element !== features[index]);
+    if (mapFeatureFilters[index].checked) {
+      selectedFeatures.push(features[index]);
+    }
+    filterPoints(offers);
+  }));
+};
+
 const addMapFilterHandlers = (offers) => {
   mapFilters.forEach(addFilterHandlers(offers));
   mapFeatureFilters.forEach(addFeatureFilterHandlers(offers));
 };
 
-export { addMapFilterHandlers };
+const mapFiltersReset = () => {
+  selectedFilters = [];
+  selectedFeatures = [];
+
+  mapFilters.forEach((filter) => {
+    filter.selectedIndex = DEFAULT_FILTER_INDEX;
+  });
+  mapFeatureFilters.forEach((filter) => {
+    filter.checked = false;
+  });
+};
+
+export { addMapFilterHandlers, mapFiltersReset };
