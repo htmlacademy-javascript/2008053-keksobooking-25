@@ -1,32 +1,22 @@
-import { disableElement, enableElement } from './util.js';
+import { enableElement } from './util.js';
 import { openUserModal } from './form-modal.js';
-import { mapReset } from './map-util.js';
-import { sliderReset } from './slider.js';
-import { imageFormReset } from './form-images.js';
-import { validationReset } from './form-validation.js';
-import { mapFiltersReset } from './map-filters.js';
+import { resetMap } from './map-util.js';
+import { resetSlider } from './slider.js';
+import { resetImagePreviews } from './form-images.js';
+import { resetValidation } from './form-validation.js';
+import { resetMapFilters } from './map-filters.js';
 import { fillMap } from './data.js';
+import { offerForm, mapFilterForm } from './elements.js';
 
-const offerForm = document.querySelector('.ad-form');
-
-const formElements = offerForm.querySelectorAll('.ad-form__element');
-const mapFilterFormContainer = document.querySelector('.map__filters-container');
-const mapFilterForm = mapFilterFormContainer.querySelector('.map__filters');
 const mapBasicFilters = mapFilterForm.querySelectorAll('.map__filter');
 const mapFeatureFilter = mapFilterForm.querySelector('.map__features');
+
+const formElements = offerForm.querySelectorAll('.ad-form__element');
 const sliderElement = offerForm.querySelector('.ad-form__slider');
+
 const submitButton = offerForm.querySelector('.ad-form__submit');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-const disablePage = () => {
-  offerForm.classList.add('ad-form--disabled');
-  mapFilterForm.classList.add('map__filters--disabled');
-  formElements.forEach(disableElement);
-  mapBasicFilters.forEach(disableElement);
-  disableElement(mapFeatureFilter);
-  disableElement(sliderElement);
-};
 
 const enableForm = () => {
   offerForm.classList.remove('ad-form--disabled');
@@ -40,34 +30,35 @@ const enableMapFilters = () => {
   enableElement(mapFeatureFilter);
 };
 
-const blockSubmitButton = () => {
+const lockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Публикую...';
 };
 
-const unblockSubmitButton = () => {
+const unlockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
-const formElementsReset = () => {
-  mapReset();
-  sliderReset();
-  imageFormReset();
-  validationReset();
-  mapFiltersReset();
+
+const resetFormElements = () => {
+  resetMap();
+  resetSlider();
+  resetImagePreviews();
+  resetValidation();
+  resetMapFilters();
   fillMap();
 };
 
 const formSuccess = () => {
   openUserModal(successTemplate);
   offerForm.reset();
-  formElementsReset();
-  unblockSubmitButton();
+  resetFormElements();
+  unlockSubmitButton();
 };
 
 const formError = () => {
   openUserModal(errorTemplate);
-  unblockSubmitButton();
+  unlockSubmitButton();
 };
 
-export { disablePage, enableForm, enableMapFilters, blockSubmitButton, formElementsReset, formSuccess, formError };
+export { enableForm, enableMapFilters, lockSubmitButton, resetFormElements, formSuccess, formError };

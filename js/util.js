@@ -1,3 +1,18 @@
+const typesToMinPrices = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
+const Prices = {
+  DEFAULT: 1000,
+  MAX: 100000,
+  LOW: 10000,
+  HIGH: 50000
+};
+
 //Функция взята со StackOverflow: https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range и доработана
 const getRandomInteger = (a, b) => {
   const min = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -15,11 +30,11 @@ const getRandomFloat = (a, b, decimal = 1) => {
 };
 
 const disableElement = (element) => {
-  element.toggleAttribute('disabled', true);
+  element.setAttribute('disabled');
 };
 
 const enableElement = (element) => {
-  element.toggleAttribute('disabled', false);
+  element.removeAttribute('disabled');
 };
 
 // Функция взята из интернета и доработана
@@ -43,5 +58,5 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomFloat, getRandomInteger, disableElement, enableElement, debounce};
+export {typesToMinPrices, Prices, getRandomFloat, getRandomInteger, disableElement, enableElement, debounce};
 

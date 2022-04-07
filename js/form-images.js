@@ -1,13 +1,20 @@
-const offerForm = document.querySelector('.ad-form');
-const avatarFileChooser = offerForm.querySelector('#avatar');
-const avatarPreviewElement = offerForm.querySelector('.ad-form-header__preview-avatar');
-const photoFileChooser = offerForm.querySelector('#images');
-const photoPreviewContainer = offerForm.querySelector('.ad-form__photo');
-const photoPreviewElement = document.createElement('img');
+import { offerForm } from './elements.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const PHOTO_CLASS = 'ad-form__photo';
 const AVATAR_PLACEHOLDER = 'img/muffin-grey.svg';
+
+const avatarFileChooser = offerForm.querySelector('#avatar');
+const avatarPreviewElement = offerForm.querySelector('.ad-form-header__preview-avatar');
+
+const photoFileChooser = offerForm.querySelector('#images');
+const photoPreviewContainer = offerForm.querySelector('.ad-form__photo');
+const photoPreviewElement = document.createElement('img');
+
+const checkImageFileType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
 
 const showAvatarPreview = (file) => {
   avatarPreviewElement.src = URL.createObjectURL(file);
@@ -20,31 +27,27 @@ const showPhotoPreview = (file) => {
   photoPreviewContainer.appendChild(photoPreviewElement);
 };
 
-const imagePreviewHandler = (evt) => {
-  const file = evt.target.files[0];
-  const fileName = file.name.toLowerCase();
-
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-  if (matches && evt.target === photoFileChooser) {
-    showPhotoPreview(file);
-  }
-  if (matches && evt.target === avatarFileChooser) {
+const avatarUploadHandler = () => {
+  const file = avatarFileChooser.files[0];
+  if (checkImageFileType(file)) {
     showAvatarPreview(file);
   }
 };
 
-const imageFormReset = () => {
+const photoUploadHandler = () => {
+  const file = photoFileChooser.files[0];
+  if (checkImageFileType(file)) {
+    showPhotoPreview(file);
+  }
+};
+
+const resetImagePreviews = () => {
   photoPreviewContainer.innerHTML = '';
   avatarPreviewElement.src = AVATAR_PLACEHOLDER;
 };
 
-photoFileChooser.addEventListener('change', (evt) => {
-  imagePreviewHandler(evt);
-});
+photoFileChooser.addEventListener('change', photoUploadHandler);
 
-avatarFileChooser.addEventListener('change', (evt) => {
-  imagePreviewHandler(evt);
-});
+avatarFileChooser.addEventListener('change', avatarUploadHandler);
 
-export { imageFormReset };
+export { resetImagePreviews };
