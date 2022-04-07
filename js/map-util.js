@@ -52,6 +52,7 @@ const mapReset = () => {
     lat: DEFAULT_LAT,
     lng: DEFAULT_LNG
   });
+  markerGroup.clearLayers();
 };
 
 const createMarker = (offer) => {
