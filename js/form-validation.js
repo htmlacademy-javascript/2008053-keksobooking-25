@@ -9,10 +9,10 @@ const roomNumber = offerForm.querySelector('#room_number');
 const capacityForm = offerForm.querySelector('#capacity');
 
 const MAX_ROOMS = 100;
-const PRICE_CELING = 100000;
+const PRICE_TOP_MARGIN = 100000;
 
 const TITLE_LENGTH_ERROR_MESSAGE = 'От 30 до 100 символов';
-const PRICE_CEILING_ERROR_MESSAGE = 'Не более 100 000 ₽/ночь';
+const PRICE_TOP_MARGIN_ERROR_MESSAGE = 'Не более 100 000 ₽/ночь';
 const CAPACITY_ERROR_MESSAGE = 'Количество гостей должно соответствовать количеству комнат';
 
 const minPrices = {
@@ -32,7 +32,7 @@ const pristineConfig = {
 
 const pristine = new Pristine(offerForm, pristineConfig, true);
 
-const getPriceErrorMessage = () => priceForm.value < PRICE_CELING ? `Для данного типа жилья минимальная стоимость ${  minPrices[typeMenu.value]} ₽/ночь` : PRICE_CEILING_ERROR_MESSAGE;
+const getPriceErrorMessage = () => priceForm.value < PRICE_TOP_MARGIN ? `Для данного типа жилья минимальная стоимость ${  minPrices[typeMenu.value]} ₽/ночь` : PRICE_TOP_MARGIN_ERROR_MESSAGE;
 
 const getRoomsErrorMessage = (value) => {
   const rooms = Number(value);
@@ -54,7 +54,7 @@ const validateCapacity = () => {
   return (rooms >= capacity && rooms < MAX_ROOMS && capacity !== 0 || rooms === MAX_ROOMS && capacity === 0);
 };
 
-const validatePrice = () => Number(priceForm.value) >= minPrices[typeMenu.value] && Number(priceForm.value) < PRICE_CELING;
+const validatePrice = () => Number(priceForm.value) >= minPrices[typeMenu.value] && Number(priceForm.value) < PRICE_TOP_MARGIN;
 
 const validationReset = () => {
   pristine.reset();
