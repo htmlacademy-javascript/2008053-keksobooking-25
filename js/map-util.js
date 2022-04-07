@@ -1,26 +1,25 @@
 import { makeCard } from './cards.js';
-import { enableMapFilters } from './form-util.js';
+
+const MAX_SIMILAR_OFFERS = 10;
 
 const MAP_CLASS = 'map-canvas';
 const DEFAULT_LAT = 35.68172;
 const DEFAULT_LNG = 139.75392;
 
 const MAIN_PIN_URL = './img/main-pin.svg';
-const MAIN_PIN_SIZE = [52, 52];
-const MAIN_PIN_ANCHOR = [26, 52];
+const MAIN_PIN_SIZE_VALUES = [52, 52];
+const MAIN_PIN_ANCHOR_VALUES = [26, 52];
 
 const PIN_URL = './img/pin.svg';
-const PIN_SIZE = [40, 40];
-const PIN_ANCHOR = [20, 40];
-
-const MAX_SIMILAR_OFFERS = 10;
+const PIN_SIZE_VALUES = [40, 40];
+const PIN_ANCHOR_VALUES = [20, 40];
 
 const map = L.map(MAP_CLASS);
 
 const mainPinIcon = L.icon({
   iconUrl: MAIN_PIN_URL,
-  iconSize: MAIN_PIN_SIZE,
-  iconAnchor: MAIN_PIN_ANCHOR
+  iconSize: MAIN_PIN_SIZE_VALUES,
+  iconAnchor: MAIN_PIN_ANCHOR_VALUES
 });
 
 const mainMarker = L.marker(
@@ -36,13 +35,13 @@ const mainMarker = L.marker(
 
 const pinIcon = L.icon({
   iconUrl: PIN_URL,
-  iconSize: PIN_SIZE,
-  iconAnchor: PIN_ANCHOR
+  iconSize: PIN_SIZE_VALUES,
+  iconAnchor: PIN_ANCHOR_VALUES
 });
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const mapReset = () => {
+const resetMap = () => {
   map.setView({
     lat: DEFAULT_LAT,
     lng: DEFAULT_LNG
@@ -66,7 +65,6 @@ const createMarker = (offer) => {
 
 const createPoints = (offers) => {
   offers.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
-  enableMapFilters();
 };
 
-export { map, mainMarker, markerGroup, mapReset, createMarker, createPoints };
+export { map, mainMarker, markerGroup, resetMap, createPoints };

@@ -1,7 +1,3 @@
-const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const photosFragment = document.createDocumentFragment();
-const featuresFragment = document.createDocumentFragment();
-
 const placeTypes = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -10,26 +6,32 @@ const placeTypes = {
   hotel: 'Отель'
 };
 
-const getPhotos = function (photo) {
+const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+const photosFragment = document.createDocumentFragment();
+const featuresFragment = document.createDocumentFragment();
+
+//Для работы с this используются "функциональные выражения"
+const getPhotos = (photo) => {
   const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
-  this.innerHTML = '';
+
   template.src = photo;
   photosFragment.appendChild(template);
 };
 
 const getFeatures = function (feature) {
-  const featureItem = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
-  this.innerHTML = '';
-  featuresFragment.appendChild(featureItem);
+  const template = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
+
+  featuresFragment.appendChild(template);
 };
 
 const fillContainer = (type, cb, container, fragment) => {
-  type.forEach(cb, container);
+  container.innerHTML = '';
+  type.forEach(cb);
   container.append(fragment);
 };
 
 const insertFeatures = (features, container) => features ? fillContainer(features, getFeatures, container, featuresFragment) : container.classList.add('hidden');
-const inserPhotos = (photos, container) => photos ? fillContainer(photos, getPhotos, container, photosFragment) : container.classList.add('hidden');
+const insertPhotos = (photos, container) => photos ? fillContainer(photos, getPhotos, container, photosFragment) : container.classList.add('hidden');
 
 const makeCard = (element) => {
   const card = cardTemplate.cloneNode(true);
@@ -58,7 +60,7 @@ const makeCard = (element) => {
   descriptionText.textContent = element.offer.description;
 
   insertFeatures(features, featureContainer);
-  inserPhotos(photos, photoContainer);
+  insertPhotos(photos, photoContainer);
 
   return card;
 };

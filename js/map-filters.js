@@ -1,16 +1,11 @@
 import { debounce } from './util.js';
-import { markerGroup, createMarker, mapReset } from './map-util.js';
+import { markerGroup, resetMap, createPoints } from './map-util.js';
+import { mapFiltersContainer } from './elements.js';
 
-const mapFiltersContainer = document.querySelector('.map__filters-container');
-const mapFilters = mapFiltersContainer.querySelectorAll('.map__filter');
-const mapFeatureFiltersContainer = mapFiltersContainer.querySelector('#housing-features');
-const mapFeatureFilters = mapFeatureFiltersContainer.querySelectorAll('.map__checkbox');
-
-const MAX_SIMILAR_OFFERS = 10;
 const DEFAULT_FILTER_INDEX = 0;
 
-const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const filters = ['type', 'price', 'rooms', 'guests'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const FILTERS = ['type', 'price', 'rooms', 'guests'];
 
 const FilterValues = {
   TYPE: 'type',
@@ -30,6 +25,10 @@ const PriceMargins = {
   BOTTOM: 10000
 };
 
+const mapFilters = mapFiltersContainer.querySelectorAll('.map__filter');
+const mapFeatureFiltersContainer = mapFiltersContainer.querySelector('#housing-features');
+const mapFeatureFilters = mapFeatureFiltersContainer.querySelectorAll('.map__checkbox');
+
 let selectedFilters = [];
 let selectedFeatures = [];
 
@@ -45,15 +44,15 @@ const filterPrice = (price, range) => {
 };
 
 const filterPoints = (offers) => {
-  const type = selectedFilters[filters.indexOf(FilterValues.TYPE)];
-  const price = selectedFilters[filters.indexOf(FilterValues.PRICE)];
-  const rooms = selectedFilters[filters.indexOf(FilterValues.ROOMS)];
-  const guests = selectedFilters[filters.indexOf(FilterValues.GUESTS)];
+  const type = selectedFilters[FILTERS.indexOf(FilterValues.TYPE)];
+  const price = selectedFilters[FILTERS.indexOf(FilterValues.PRICE)];
+  const rooms = selectedFilters[FILTERS.indexOf(FilterValues.ROOMS)];
+  const guests = selectedFilters[FILTERS.indexOf(FilterValues.GUESTS)];
 
   let filteredData = offers;
 
   markerGroup.clearLayers();
-  mapReset();
+  resetMap();
 
   if (type) {
     filteredData = filteredData.filter((element) => element.offer.type === type);
@@ -67,13 +66,13 @@ const filterPoints = (offers) => {
   if (guests) {
     filteredData = filteredData.filter((element) => element.offer.guests === Number(guests));
   }
-  if (selectedFeatures !== []) {
+  if (selectedFeatures.length !== 0) {
     for (let i = 0; i < selectedFeatures.length; i++) {
       filteredData = filteredData.filter((element) => element.offer.features && (element.offer.features).includes(selectedFeatures[i]));
     }
   }
 
-  filteredData.slice(0, MAX_SIMILAR_OFFERS).forEach(createMarker);
+  createPoints(filteredData);
 };
 
 const addFilterHandlers = (offers) => (filter, index) => {
@@ -88,9 +87,9 @@ const addFilterHandlers = (offers) => (filter, index) => {
 
 const addFeatureFilterHandlers = (offers) => (feature, index) => {
   feature.addEventListener('change', debounce(() => {
-    selectedFeatures = selectedFeatures.filter((element) => element !== features[index]);
+    selectedFeatures = selectedFeatures.filter((element) => element !== FEATURES[index]);
     if (mapFeatureFilters[index].checked) {
-      selectedFeatures.push(features[index]);
+      selectedFeatures.push(FEATURES[index]);
     }
     filterPoints(offers);
   }));
@@ -101,7 +100,7 @@ const addMapFilterHandlers = (offers) => {
   mapFeatureFilters.forEach(addFeatureFilterHandlers(offers));
 };
 
-const mapFiltersReset = () => {
+const resetMapFilters = () => {
   selectedFilters = [];
   selectedFeatures = [];
 
@@ -113,4 +112,4 @@ const mapFiltersReset = () => {
   });
 };
 
-export { addMapFilterHandlers, mapFiltersReset };
+export { addMapFilterHandlers, resetMapFilters };

@@ -1,27 +1,20 @@
 import './form-validation.js';
 import './form-images.js';
-import { disablePage, formElementsReset } from './form-util.js';
+import { resetFormElements } from './form-util.js';
+import { typesToMinPrices } from './util.js';
+import { offerForm, typeMenu, priceForm, timeIn, timeOut } from './elements.js';
 
-const offerForm = document.querySelector('.ad-form');
-const typeMenu = offerForm.querySelector('#type');
-const priceForm = offerForm.querySelector('#price');
-const timeIn = offerForm.querySelector('#timein');
-const timeOut = offerForm.querySelector('#timeout');
-
-const minPrices = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000
-};
-
-const priceTypeFormHandler = () => {
-  priceForm.setAttribute('min', minPrices[typeMenu.value]);
+const typeMenuChangeHandler = () => {
+  priceForm.min = typesToMinPrices[typeMenu.value];
   priceForm.placeholder = `От ${  priceForm.min} ₽/ночь`;
 };
 
-typeMenu.addEventListener('change', () => priceTypeFormHandler());
+const offerFormResetHandler = () => {
+  offerForm.reset();
+  resetFormElements();
+};
+
+typeMenu.addEventListener('change', typeMenuChangeHandler);
 
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
@@ -31,8 +24,5 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
-offerForm.addEventListener('reset', () => {
-  formElementsReset();
-});
+offerForm.addEventListener('reset', offerFormResetHandler);
 
-disablePage();

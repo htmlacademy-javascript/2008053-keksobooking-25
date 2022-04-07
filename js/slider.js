@@ -1,38 +1,35 @@
-const offerSection = document.querySelector('.notice');
-const offerForm = offerSection.querySelector('.ad-form');
-const typeMenu = offerForm.querySelector('#type');
-const priceForm = offerForm.querySelector('#price');
-const sliderElement = offerForm.querySelector('.ad-form__slider');
+import { typesToMinPrices, Prices } from './util.js';
+import { typeMenu, priceForm, sliderElement  } from './elements.js';
 
-const DEFAULT_PRICE = 1000;
-const MAX_PRICE = 100000;
+const DEFAULT_PRICE_PLACEHOLDER = `От ${  Prices.DEFAULT} ₽/ночь`;
 
-const DEFAULT_PRICE_PLACEHOLDER = `От ${  DEFAULT_PRICE} ₽/ночь`;
-
-const updateSlider = () => {
-  const minPrice = Number(priceForm.getAttribute('min'));
+const typeChangeHandler = () => {
+  const MIN_PRICE = Number(typesToMinPrices[typeMenu.value]);
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: minPrice,
-      max: MAX_PRICE
+      min: MIN_PRICE,
+      max: Prices.MAX
     }
   });
+};
+
+const priceChangeHandler = () => {
   sliderElement.noUiSlider.set(priceForm.value);
 };
 
-const sliderReset = () => {
+const resetSlider = () => {
   sliderElement.noUiSlider.updateOptions({
-    start: DEFAULT_PRICE
+    start: Prices.DEFAULT
   });
   priceForm.placeholder = DEFAULT_PRICE_PLACEHOLDER;
 };
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: DEFAULT_PRICE,
-    max: MAX_PRICE,
+    min: Prices.DEFAULT,
+    max: Prices.MAX,
   },
-  start: DEFAULT_PRICE,
+  start: Prices.DEFAULT,
   step: 1,
   connect: 'lower',
   format: {
@@ -45,7 +42,8 @@ sliderElement.noUiSlider.on('slide', () => {
   priceForm.value = sliderElement.noUiSlider.get();
 });
 
-typeMenu.addEventListener('change', updateSlider);
+typeMenu.addEventListener('change', typeChangeHandler);
+priceForm.addEventListener('change', priceChangeHandler);
 
-export {sliderReset};
+export {resetSlider};
 
