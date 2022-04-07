@@ -238,7 +238,6 @@ fieldset {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
 }
 
-
 /* Форма для публикации объявления
    ========================================================================== */
 
@@ -306,6 +305,10 @@ fieldset {
 
   border-radius: 5px;
   background-color: #dadada;
+}
+
+.ad-form-header__preview-avatar {
+  border-radius: 5px;
 }
 
 .ad-form__field {
@@ -945,7 +948,6 @@ fieldset {
 .popup__photo:hover {
   border: 2px solid #ff5635;
 }
-
 
 /**
  * Сообщения об успешном и неуспешном создании объявления

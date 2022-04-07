@@ -25,9 +25,9 @@ const PriceRanges = {
   LOW: 'low'
 };
 
-const priceMargins = {
-  high: 50000,
-  low: 10000
+const PriceMargins = {
+  TOP: 50000,
+  BOTTOM: 10000
 };
 
 const selectedFilters = [];
@@ -37,11 +37,11 @@ let selectedFeatures = [];
 const filterPrice = (price, range) => {
   switch (range) {
     case PriceRanges.MID:
-      return price <= priceMargins.high && price >= priceMargins.low;
+      return price <= PriceMargins.TOP && price >= PriceMargins.BOTTOM;
     case PriceRanges.HIGH:
-      return price > priceMargins.high;
+      return price > PriceMargins.TOP;
     case PriceRanges.LOW:
-      return price < priceMargins.low;
+      return price < PriceMargins.BOTTOM;
   }
 };
 
