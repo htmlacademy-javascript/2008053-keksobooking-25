@@ -1,6 +1,7 @@
 import { debounce } from './util.js';
 import { markerGroup, resetMap, createPoints } from './map-util.js';
 import { mapFiltersContainer } from './elements.js';
+import { Prices } from './util.js';
 
 const DEFAULT_FILTER_INDEX = 0;
 
@@ -20,11 +21,6 @@ const PriceRanges = {
   LOW: 'low'
 };
 
-const PriceMargins = {
-  TOP: 50000,
-  BOTTOM: 10000
-};
-
 const mapFilters = mapFiltersContainer.querySelectorAll('.map__filter');
 const mapFeatureFiltersContainer = mapFiltersContainer.querySelector('#housing-features');
 const mapFeatureFilters = mapFeatureFiltersContainer.querySelectorAll('.map__checkbox');
@@ -35,11 +31,11 @@ let selectedFeatures = [];
 const filterPrice = (price, range) => {
   switch (range) {
     case PriceRanges.MID:
-      return price <= PriceMargins.TOP && price >= PriceMargins.BOTTOM;
+      return price <= Prices.HIGH && price >= Prices.LOW;
     case PriceRanges.HIGH:
-      return price > PriceMargins.TOP;
+      return price > Prices.HIGH;
     case PriceRanges.LOW:
-      return price < PriceMargins.BOTTOM;
+      return price < Prices.LOW;
   }
 };
 
