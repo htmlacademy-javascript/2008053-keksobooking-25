@@ -31,11 +31,11 @@ let selectedFeatures = [];
 const filterPrice = (price, range) => {
   switch (range) {
     case PriceRanges.MID:
-      return price <= Prices.TOP && price >= Prices.BOTTOM;
+      return price <= Prices.HIGH && price >= Prices.LOW;
     case PriceRanges.HIGH:
-      return price > Prices.TOP;
+      return price > Prices.HIGH;
     case PriceRanges.LOW:
-      return price < Prices.BOTTOM;
+      return price < Prices.LOW;
   }
 };
 
