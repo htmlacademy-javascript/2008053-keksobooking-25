@@ -6,6 +6,7 @@ const dataErrorTemplate = document.querySelector('#data-error').content.querySel
 
 const closeDataErrorModal = () => {
   dataErrorCanvas.innerHTML = '';
+  dataErrorCanvas.classList.add('visually-hidden');
 };
 
 const dataErrorRetryButtonClickHandler = (evt) => {
@@ -24,7 +25,9 @@ const createDataErrorModal = () => {
   const dataErrorModalRetryButton = dataErrorModal.querySelector('.data-error__button--retry');
   const dataErrorModalCloseButton = dataErrorModal.querySelector('.data-error__button--close');
 
+  dataErrorCanvas.innerHTML = '';
   dataErrorCanvas.appendChild(dataErrorModal);
+  dataErrorCanvas.classList.remove('visually-hidden');
 
   dataErrorModalRetryButton.addEventListener('click', (evt) => dataErrorRetryButtonClickHandler(evt));
 

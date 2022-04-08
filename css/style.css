@@ -1065,7 +1065,7 @@ fieldset {
 
 .data-error__canvas {
   position: absolute;
-  z-index: 1500;
+  z-index: 1050;
 
   margin: auto;
   margin-top: 410px;

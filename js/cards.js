@@ -10,7 +10,6 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 const photosFragment = document.createDocumentFragment();
 const featuresFragment = document.createDocumentFragment();
 
-//Для работы с this используются "функциональные выражения"
 const getPhotos = (photo) => {
   const template = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 
@@ -18,7 +17,7 @@ const getPhotos = (photo) => {
   photosFragment.appendChild(template);
 };
 
-const getFeatures = function (feature) {
+const getFeatures = (feature) => {
   const template = cardTemplate.querySelector(`.popup__feature--${  feature}`).cloneNode(true);
 
   featuresFragment.appendChild(template);
