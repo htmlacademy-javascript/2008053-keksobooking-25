@@ -45,7 +45,7 @@ const resetMap = () => {
   map.setView({
     lat: DEFAULT_LAT,
     lng: DEFAULT_LNG
-  }, 13)
+  }, 12)
     .closePopup();
   mainMarker.setLatLng({
     lat: DEFAULT_LAT,

@@ -9,10 +9,7 @@ const typeMenuChangeHandler = () => {
   priceForm.placeholder = `От ${  priceForm.min} ₽/ночь`;
 };
 
-const offerFormResetHandler = () => {
-  offerForm.reset();
-  resetFormElements();
-};
+const offerFormResetHandler = () => resetFormElements();
 
 typeMenu.addEventListener('change', typeMenuChangeHandler);
 
