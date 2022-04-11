@@ -1,4 +1,4 @@
-import { enableElement } from './util.js';
+import { disableElement, enableElement } from './util.js';
 import { openUserModal } from './form-modal.js';
 import { resetMap } from './map-util.js';
 import { resetSlider } from './slider.js';
@@ -17,6 +17,15 @@ const sliderElement = offerForm.querySelector('.ad-form__slider');
 const submitButton = offerForm.querySelector('.ad-form__submit');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+const disablePage = () => {
+  offerForm.classList.add('ad-form--disabled');
+  mapFilterForm.classList.add('map__filters--disabled');
+  formElements.forEach(disableElement);
+  mapBasicFilters.forEach(disableElement);
+  disableElement(mapFeatureFilter);
+  disableElement(sliderElement);
+};
 
 const enableForm = () => {
   offerForm.classList.remove('ad-form--disabled');
@@ -61,4 +70,4 @@ const formError = () => {
   unlockSubmitButton();
 };
 
-export { enableForm, enableMapFilters, lockSubmitButton, resetFormElements, formSuccess, formError };
+export { disablePage, enableForm, enableMapFilters, lockSubmitButton, resetFormElements, formSuccess, formError };
