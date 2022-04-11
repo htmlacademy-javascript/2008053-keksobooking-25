@@ -1,6 +1,6 @@
 import './form-validation.js';
 import './form-images.js';
-import { resetFormElements } from './form-util.js';
+import { disablePage, resetFormElements } from './form-util.js';
 import { typesToMinPrices } from './util.js';
 import { offerForm, typeMenu, priceForm, timeIn, timeOut } from './elements.js';
 
@@ -23,3 +23,4 @@ timeOut.addEventListener('change', () => {
 
 offerForm.addEventListener('reset', offerFormResetHandler);
 
+disablePage();

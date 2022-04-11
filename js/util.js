@@ -30,7 +30,7 @@ const getRandomFloat = (a, b, decimal = 1) => {
 };
 
 const disableElement = (element) => {
-  element.setAttribute('disabled');
+  element.setAttribute('disabled', '');
 };
 
 const enableElement = (element) => {
