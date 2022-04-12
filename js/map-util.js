@@ -1,10 +1,9 @@
 import { makeCard } from './cards.js';
+import { DEFAULT_LAT, DEFAULT_LNG } from './util.js';
 
 const MAX_SIMILAR_OFFERS = 10;
 
 const MAP_CLASS = 'map-canvas';
-const DEFAULT_LAT = 35.68172;
-const DEFAULT_LNG = 139.75392;
 
 const MAIN_PIN_URL = './img/main-pin.svg';
 const MAIN_PIN_SIZE_VALUES = [52, 52];

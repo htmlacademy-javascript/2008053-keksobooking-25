@@ -1,12 +1,10 @@
+import { DEFAULT_LAT, DEFAULT_LNG } from './util.js';
 import { enableForm } from './form-util.js';
 import { map, mainMarker } from './map-util.js';
 import { fillMap } from './data.js';
 
 const MAP_TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
-const DEFAULT_LAT = 35.68172;
-const DEFAULT_LNG = 139.75392;
 
 const addressForm = document.querySelector('#address');
 
