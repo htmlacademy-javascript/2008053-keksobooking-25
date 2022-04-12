@@ -1,6 +1,5 @@
-import { DEFAULT_LAT, DEFAULT_LNG } from './util.js';
 import { enableForm } from './form-util.js';
-import { map, mainMarker } from './map-util.js';
+import { DEFAULT_LAT, DEFAULT_LNG, map, mainMarker } from './map-util.js';
 import { fillMap } from './data.js';
 
 const MAP_TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
