@@ -1,6 +1,3 @@
-const DEFAULT_LAT = 35.68172;
-const DEFAULT_LNG = 139.75392;
-
 const typesToMinPrices = {
   bungalow: 0,
   flat: 1000,
@@ -61,5 +58,5 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {DEFAULT_LAT, DEFAULT_LNG, typesToMinPrices, Prices, getRandomFloat, getRandomInteger, disableElement, enableElement, debounce};
+export {typesToMinPrices, Prices, getRandomFloat, getRandomInteger, disableElement, enableElement, debounce};
 
